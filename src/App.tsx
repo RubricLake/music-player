@@ -1,49 +1,42 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
+import { open } from "@tauri-apps/plugin-dialog";
+
 import "./App.css";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const [errText, setErrText] = useState("");
+  
+  async function openFile() {
+    const filePath : String | null = await open({
+      multiple: false,
+      directory: false,
+      defaultPath: "E:\\SteamLibrary\\steamapps\\common\\DELTARUNE\\mus",
+      filters: [
+        {
+          name: "Audio Files",
+          extensions: ["mp3", "wav", "flac", "ogg"]
+        }
+      ]
+    });
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
+    if (!filePath) {
+      console.log("User closed dialog.");
+      return;
+    }
+
+    try {
+      await invoke("load_audio", {path: filePath });
+    } catch (err) {
+      setErrText("Could not load audio :(");
+    }
   }
 
   return (
     <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
+      <h1> Music-Player</h1>
+      <button onClick={openFile}>Choose Song!</button>
+      {errText.length > 0 && <p> {errText} </p>}
     </main>
   );
 }

@@ -1,3 +1,13 @@
+.container {
+  margin: 0;
+  padding-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* 
 .logo.vite:hover {
   filter: drop-shadow(0 0 2em #747bff);
 }
@@ -21,14 +31,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.container {
-  margin: 0;
-  padding-top: 10vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
+
 
 .logo {
   height: 6em;
@@ -113,4 +116,5 @@ button {
   button:active {
     background-color: #0f0f0f69;
   }
-}
+} 
+*/
