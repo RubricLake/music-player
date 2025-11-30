@@ -2,7 +2,7 @@
 
 Tauri app for playing music locally.
 
-Windows only.
+Only supports windows 10 and 11.
 
 # Dependencies
 - `pnpm` or `npm`
@@ -10,11 +10,12 @@ Windows only.
 - [Tauri System Dependencies](https://v2.tauri.app/start/prerequisites/#system-dependencies)
 
 # Run
+*From project root*
+- Install Packages: `pnpm i`
 - Developer Mode: `pnpm tauri run dev`
 
 - Build: `pnpm tauri build`
 
-*From project root*
 # Tech Stack
 
 Tauri (Rust) + React + Typescript
