@@ -1,14 +1,16 @@
 import { useState, useRef } from "react";
 import { convertFileSrc } from "@tauri-apps/api/core";
 import { open } from "@tauri-apps/plugin-dialog";
-
+import { SongFile, PlayerControl } from "./types";
+import PlayIcon from './assets/play-circle.svg';
+import PauseIcon from './assets/pause-circle.svg';
 import "./App.css";
 
-import { SongFile, PlayerControl } from "./types";
 
 function App() {
 
   const [currentSong, setCurrentSong] = useState<SongFile | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   
   const selectFile = async () => {
@@ -31,9 +33,7 @@ function App() {
       console.log(`URL: ${url}`);
       
       if (audioRef.current) {
-        audioRef.current.playbackRate
         audioRef.current.load();
-        audioRef.current.play();
       }
     }
   }
@@ -56,6 +56,11 @@ function App() {
         break;
     }
   }
+
+  const handleTogglePlay = () => {
+    setIsPlaying(prev => !prev);
+    handleController(isPlaying ? PlayerControl.Pause : PlayerControl.Play);
+  }
   
   return (
     <div className="container">
@@ -64,10 +69,14 @@ function App() {
       { currentSong &&
         <div className="player-box">
         <p>Now Playing: <strong>{currentSong.name}</strong></p>
+        {audioRef.current && <p>Volume: {Math.round(audioRef.current.volume * 100) / 100}</p>}
         <audio ref={audioRef} id="player" src={currentSong.url}></audio>
-        <div className="control-board"> 
-          <button id="play" onClick={ () => handleController(PlayerControl.Play) }>Play</button> 
-          <button id="pause" onClick={ () => handleController(PlayerControl.Pause) }>Pause</button> 
+        <div className="control-board">  
+          <img 
+          src= {isPlaying ? PauseIcon : PlayIcon}
+          className="play-toggle" 
+          onClick={ handleTogglePlay }
+          />
           <button id="volup" onClick={ () => handleController(PlayerControl.VolumeUp) }>Vol +</button> 
           <button id="voldown" onClick={ () => handleController(PlayerControl.VolumeDown) }>Vol -</button> 
         </div>

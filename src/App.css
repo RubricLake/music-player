@@ -9,27 +9,39 @@
 
 .player-box {
   background-color: antiquewhite;
+  
 }
 
 .control-board {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
-.control-board#play {
-  color: red;
+.play-toggle {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.control-board#pause {
-  color:purple
+.play-toggle:active {
+  transform: scale(0.85); 
 }
 
-.control-board#volup {
+.play-toggle[src*="pause"] {
+  opacity: 1;
+}
+
+.play-toggle[src*="play"] {
+  opacity: 0.8;
+}
+
+.volup {
   color:blue;
 }
 
-.control-board#voldown {
+.voldown {
   color:yellowgreen;
 }
 
