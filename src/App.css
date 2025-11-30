@@ -7,6 +7,32 @@
   text-align: center;
 }
 
+.player-box {
+  background-color: antiquewhite;
+}
+
+.control-board {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.control-board#play {
+  color: red;
+}
+
+.control-board#pause {
+  color:purple
+}
+
+.control-board#volup {
+  color:blue;
+}
+
+.control-board#voldown {
+  color:yellowgreen;
+}
+
 /* 
 .logo.vite:hover {
   filter: drop-shadow(0 0 2em #747bff);
