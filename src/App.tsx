@@ -70,7 +70,7 @@ function App() {
         <div className="player-box">
         <p>Now Playing: <strong>{currentSong.name}</strong></p>
         {audioRef.current && <p>Volume: {Math.round(audioRef.current.volume * 100) / 100}</p>}
-        <audio ref={audioRef} id="player" src={currentSong.url}></audio>
+        <audio onEnded={ handleTogglePlay } ref={audioRef} id="player" src={currentSong.url}></audio>
         <div className="control-board">  
           <img 
           src= {isPlaying ? PauseIcon : PlayIcon}
